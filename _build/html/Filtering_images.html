@@ -1,0 +1,1918 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Filtering Images &#8212; Fire Detection in Images</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Filtering_images';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Feature Extraction Methods for Images" href="Features_extraction_methods.html" />
+    <link rel="prev" title="Images Processing" href="images_processing.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.jpg" class="logo__image only-light" alt="Fire Detection in Images - Home"/>
+    <script>document.write(`<img src="_static/logo.jpg" class="logo__image only-dark" alt="Fire Detection in Images - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Fire Detection in Images
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="images_processing.html"><strong>Images Processing</strong></a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"><strong>Filtering Images</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Features_extraction_methods.html"><strong>Feature Extraction Methods for Images</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Inner_evaluation.html"><strong>Applying inner evaluation</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Selecting_best_pipeline.html"><strong>Selecting the best pipeline</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Outer_evaluation.html"><strong>Applying Outer Evaluation</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Predicting_new_data.html"><strong>Predicting New Images</strong></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/FabioScielzoOrtiz/Fire-Detection" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/FabioScielzoOrtiz/Fire-Detection/issues/new?title=Issue%20on%20page%20%2FFiltering_images.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Filtering_images.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Filtering Images</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#requirements"><strong>Requirements</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-the-data"><strong>Reading the data</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#defining-response-and-predictors"><strong>Defining Response and Predictors</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#equalization"><strong>Equalization</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#equalization-of-gray-scale-images"><strong>Equalization of gray-scale images</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#equalization-of-color-scale-images-directly"><strong>Equalization of color-scale images directly</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#equalization-of-color-scale-images-with-hsv"><strong>Equalization of color-scale images with HSV</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-of-equalization-approaches"><strong>Comparison of equalization approaches</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-filters"><strong>Other Filters</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-gray-scale-images"><strong>Filtering gray-scale images</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-color-images"><strong>Filtering color images</strong></a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="filtering-images">
+<h1><strong>Filtering Images</strong><a class="headerlink" href="#filtering-images" title="Link to this heading">#</a></h1>
+<p>Filtering is a fundamental concept in image processing, particularly in computer vision and machine learning applications. By modifying images through filters, we can enhance certain features, suppress noise, or highlight specific characteristics that might not be immediately apparent in the raw image data.</p>
+<p>From a machine learning perspective, incorporating filtering into the preprocessing pipeline can indeed significantly impact model performance. Different filters can extract different sets of features, which may be more informative for the task at hand. Therefore, deciding whether to apply filters and selecting the appropriate ones become crucial steps in the data preprocessing phase, and should be part of a ML pipeline.</p>
+<p>Now we are going to show the results of applying some kind of filters on images.</p>
+<p>To work with the different filtering method we have to transform images in pixels matrices, this can be considered as a filter extraction method, and will be covered in more detailed in upcoming sections.</p>
+<section id="requirements">
+<h2><strong>Requirements</strong><a class="headerlink" href="#requirements" title="Link to this heading">#</a></h2>
+<p>Here we gather the required libraries, classes and function for this notebook.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">polars</span> <span class="k">as</span> <span class="nn">pl</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s1">&#39;whitegrid&#39;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">skimage</span> <span class="kn">import</span> <span class="n">exposure</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">PyImageML</span></code> is a Python package that has been developed under this project, which has several utils for plotting images and extracting features from them, features that later could be used along with Machine Learning algorithms to solve typical ML tasks.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;C:\Users\fscielzo\Documents\Packages\PyImageML_Package_Private&quot;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">PyImageML.preprocessing</span> <span class="kn">import</span> <span class="n">equalize_color_image_HSV</span><span class="p">,</span> <span class="n">get_V_component</span><span class="p">,</span> <span class="n">apply_filter</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="reading-the-data">
+<h2><strong>Reading the data</strong><a class="headerlink" href="#reading-the-data" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Extracting the names of the images files as well as their class/category.</span>
+<span class="n">files_list_name</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;C:\Users\fscielzo\Documents\DataScience-GitHub\Image Analysis\Image-Classification\Fire-Detection\files_list.txt&#39;</span>
+<span class="n">files_df</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">files_list_name</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">has_header</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">new_columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;path&#39;</span><span class="p">,</span> <span class="s1">&#39;class&#39;</span><span class="p">])</span>
+<span class="n">img_files_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">files_df</span><span class="p">[</span><span class="s1">&#39;path&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">files_df</span><span class="p">))]</span>
+
+<span class="c1"># building a list with the current paths of the data-set images.</span>
+<span class="n">img_path_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">folder_path</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;C:\Users\fscielzo\Documents\DataScience-GitHub\Image Analysis\Image-Classification\Fire-Detection\Data&#39;</span>
+<span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">img_files_names</span><span class="p">:</span>
+    <span class="n">img_path_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder_path</span><span class="p">,</span> <span class="n">filename</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="defining-response-and-predictors">
+<h2><strong>Defining Response and Predictors</strong><a class="headerlink" href="#defining-response-and-predictors" title="Link to this heading">#</a></h2>
+<p>In this section we define the response and predictors.</p>
+<ul class="simple">
+<li><p><strong>Predictors:</strong> a list with the paths of the images files.</p></li>
+<li><p><strong>Response:</strong> a vector (1D array) that identify the category of each image.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Y</span> <span class="o">=</span> <span class="n">files_df</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">img_path_list</span> 
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="equalization">
+<h2><strong>Equalization</strong><a class="headerlink" href="#equalization" title="Link to this heading">#</a></h2>
+<p>Equalization is one such filtering technique. It aims to enhance the contrast of an image by redistributing the intensity values, typically stretching out the intensity range to cover the entire spectrum. This can make details more distinguishable, especially in images with poor contrast or lighting conditions.</p>
+<p>We distinguish different procedures for equalizing images depending on whether they are gray-scale or color.</p>
+<p>Histogram equalization is a technique used in image processing to improve the contrast of an image by redistributing the intensity values of the pixels. It’s based on the concept of histogram, which is a graphical representation of the distribution of pixel intensities in an image.</p>
+<p>Here’s how histogram equalization works:</p>
+<ul class="simple">
+<li><p><strong>Compute Histogram:</strong> The first step is to compute the histogram of the input grayscale image. The histogram shows the frequency of occurrence of each intensity value in the image.</p></li>
+<li><p><strong>Compute Cumulative Distribution Function (CDF):</strong> Next, the cumulative distribution function (CDF) is calculated based on the histogram. The CDF represents the cumulative sum of normalized frequencies in the histogram. It essentially shows the cumulative probability of occurrence of each intensity value.</p></li>
+<li><p><strong>Normalize the CDF:</strong> The CDF values are then normalized to map them to the range [0, 1]. This ensures that the intensity values of the output image will also be in the range [0, 1].</p></li>
+<li><p><strong>Map Intensity Values:</strong> Each pixel in the input image is then mapped to a new intensity value based on the normalized CDF. This mapping redistributes the intensity values such that the CDF of the output image approaches a straight line, which corresponds to a uniform distribution of intensities.</p></li>
+<li><p><strong>Create Equalized Image:</strong> Finally, the new intensity values obtained from the mapping are assigned to the corresponding pixels in the output image, creating the equalized image</p></li>
+</ul>
+<section id="equalization-of-gray-scale-images">
+<h3><strong>Equalization of gray-scale images</strong><a class="headerlink" href="#equalization-of-gray-scale-images" title="Link to this heading">#</a></h3>
+<p>In this section we are going to analyze how to equalize gray-scale images.</p>
+<p>The following function summarize the process followed to equalize an image.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_equalization</span><span class="p">(</span><span class="n">img_array</span><span class="p">):</span>
+
+    <span class="n">img_vector</span> <span class="o">=</span> <span class="n">img_array</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+    <span class="n">n_pixels</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">img_vector</span><span class="p">))</span>
+
+    <span class="c1"># Step 1: Compute Histogram</span>
+    <span class="n">counts</span><span class="p">,</span> <span class="n">pixels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">img_vector</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">n_pixels</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">n_pixels</span><span class="p">))</span>
+  
+    <span class="c1"># Step 2: Compute Cumulative Distribution Function (CDF)</span>
+    <span class="n">cdf</span> <span class="o">=</span> <span class="n">counts</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span>
+ 
+    <span class="c1"># Step 3: Normalize the CDF</span>
+    <span class="n">cdf_norm</span> <span class="o">=</span> <span class="n">cdf</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">cdf</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+    <span class="n">pixels_cdf_norm</span> <span class="o">=</span> <span class="p">{</span><span class="nb">int</span><span class="p">(</span><span class="n">pixels</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span> <span class="n">cdf_norm</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cdf_norm</span><span class="p">))}</span>
+    
+    <span class="c1"># Step 4: Map Intensity Values</span>
+    <span class="n">img_equalized_vector</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">img_vector</span><span class="p">:</span>
+        <span class="n">img_equalized_vector</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pixels_cdf_norm</span><span class="p">[</span><span class="n">x</span><span class="p">])</span>
+    <span class="n">img_equalized_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">img_equalized_vector</span><span class="p">)</span>
+    <span class="c1"># Equivalent to: equalized_image = np.interp(img_vector, pixels[:-1], cdf_norm)</span>
+    
+    <span class="c1"># Step 5: Resize the equalized vector to convert it into a matrix</span>
+    <span class="n">img_equalized_array</span> <span class="o">=</span> <span class="n">img_equalized_vector</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">img_array</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">img_equalized_array</span><span class="p">,</span> <span class="n">pixels_cdf_norm</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We equalize <code class="docutils literal notranslate"><span class="pre">img_gray_pixels_matrix</span></code> using the above custom function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">img_path_list</span> 
+<span class="n">example_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">example_img_gray</span> <span class="o">=</span> <span class="n">example_img</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s1">&#39;L&#39;</span><span class="p">)</span>
+<span class="n">gray_img_pixels_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">example_img_gray</span><span class="p">)</span>
+<span class="n">equalized_gray_img_pixels_matrix</span><span class="p">,</span> <span class="n">pixels_cdf_norm</span> <span class="o">=</span> <span class="n">get_equalization</span><span class="p">(</span><span class="n">img_array</span><span class="o">=</span><span class="n">gray_img_pixels_matrix</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">equalized_gray_img_pixels_matrix</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.23180069, 0.50567303, 0.74150038, ..., 0.99934542, 0.99966279,
+        0.99966279],
+       [0.13795771, 0.39052644, 0.26901258, ..., 0.99966279, 0.99966279,
+        0.99966279],
+       [0.56016186, 0.67030983, 0.86239933, ..., 0.99934542, 0.99966279,
+        0.99986115],
+       ...,
+       [0.69143492, 0.63740231, 0.59642163, ..., 0.71226247, 0.70192804,
+        0.68108065],
+       [0.63740231, 0.68108065, 0.71226247, ..., 0.79644543, 0.74150038,
+        0.71226247],
+       [0.70192804, 0.69143492, 0.67030983, ..., 0.85176737, 0.8120165 ,
+        0.78295712]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gray_img_pixels_matrix</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 48,  87, 112, ..., 251, 252, 252],
+       [ 33,  71,  53, ..., 252, 252, 252],
+       [ 94, 105, 140, ..., 251, 252, 253],
+       ...,
+       [107, 102,  98, ..., 109, 108, 106],
+       [102, 106, 109, ..., 119, 112, 109],
+       [108, 107, 105, ..., 135, 122, 117]], dtype=uint8)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">equalized_gray_img_pixels_matrix</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(182, 277)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gray_img_pixels_matrix</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(182, 277)
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">pixels_cdf_norm</span></code> tells us the corresponding equalized value for each pixel in <code class="docutils literal notranslate"><span class="pre">img_gray_pixels_matrix</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pixels_cdf_norm</span><span class="p">[</span><span class="mi">48</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.2318006902844448
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pixels_cdf_norm</span><span class="p">[</span><span class="mi">87</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5056730273336771
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pixels_cdf_norm</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{0: 0.0005950727972388623,
+ 1: 0.004026659261316301,
+ 2: 0.0073193954060380055,
+ 3: 0.010116237553060658,
+ 4: 0.015352878168762645,
+ 5: 0.019815924148054113,
+ 6: 0.023862419169278375,
+ 7: 0.02723449835363193,
+ 8: 0.031062800015868607,
+ 9: 0.035644860554607846,
+ 10: 0.03915579005831713,
+ 11: 0.04351965723806879,
+ 12: 0.04756615225929305,
+ 13: 0.05077954536438291,
+ 14: 0.054845876145515136,
+ 15: 0.05859483476811997,
+ 16: 0.06262149402943627,
+ 17: 0.06660848177093665,
+ 18: 0.0707144840718848,
+ 19: 0.07454278573412147,
+ 20: 0.07823223707700241,
+ 21: 0.0829531479350974,
+ 22: 0.08715832903558535,
+ 23: 0.09104613797754592,
+ 24: 0.09584639187527275,
+ 25: 0.10060697425318364,
+ 26: 0.10556591423017415,
+ 27: 0.10981076685047804,
+ 28: 0.11405561947078192,
+ 29: 0.11897488792795652,
+ 30: 0.12329908358789225,
+ 31: 0.12857539572341017,
+ 32: 0.1329590986630698,
+ 33: 0.13795771015987623,
+ 34: 0.14299599317649858,
+ 35: 0.14819296227238465,
+ 36: 0.1532907525687309,
+ 37: 0.15866624350378863,
+ 38: 0.16435910659737374,
+ 39: 0.17030983456976237,
+ 40: 0.17586384734399174,
+ 41: 0.18123933827904948,
+ 42: 0.18717023049153014,
+ 43: 0.1931407942238267,
+ 44: 0.20044035386995676,
+ 45: 0.20750188439719125,
+ 46: 0.21601142539770699,
+ 47: 0.22360852144245646,
+ 48: 0.2318006902844448,
+ 49: 0.23910024993057485,
+ 50: 0.2470147181338517,
+ 51: 0.25457214265878525,
+ 52: 0.26171301622565163,
+ 53: 0.2690125758717816,
+ 54: 0.2755782124013171,
+ 55: 0.2826794144483675,
+ 56: 0.2892648867378109,
+ 57: 0.29598920934661005,
+ 58: 0.3030904113936605,
+ 59: 0.31005276312135516,
+ 60: 0.31753084460665687,
+ 61: 0.3238981235371127,
+ 62: 0.33062244614591185,
+ 63: 0.3371285753957234,
+ 64: 0.34395207680406237,
+ 65: 0.35117229341056055,
+ 66: 0.3571626929027651,
+ 67: 0.36398619431110407,
+ 68: 0.3696592216447812,
+ 69: 0.3762050224144087,
+ 70: 0.3831872099020113,
+ 71: 0.3905264410679573,
+ 72: 0.3977466576744555,
+ 73: 0.4046693378823343,
+ 74: 0.41175070416947673,
+ 75: 0.41889157773634306,
+ 76: 0.4257745864244059,
+ 77: 0.4322608799143095,
+ 78: 0.4394810965208077,
+ 79: 0.44668147736739794,
+ 80: 0.4541793946126076,
+ 81: 0.4609037172214068,
+ 82: 0.46842147022652436,
+ 83: 0.47627643115007734,
+ 84: 0.48365533383583925,
+ 85: 0.4915896377990241,
+ 86: 0.4983139604078232,
+ 87: 0.5056730273336771,
+ 88: 0.5134883167374142,
+ 89: 0.5205895187844646,
+ 90: 0.5281866148292141,
+ 91: 0.5360415757527671,
+ 92: 0.543975879715952,
+ 93: 0.5521085412782164,
+ 94: 0.560161859800849,
+ 95: 0.5687507438409966,
+ 96: 0.5777760145991193,
+ 97: 0.5872376720752172,
+ 98: 0.5964216289126036,
+ 99: 0.6068155671043758,
+ 100: 0.6172690125758717,
+ 101: 0.6275042646883802,
+ 102: 0.6374023088824533,
+ 103: 0.6481136192327528,
+ 104: 0.6593009878208435,
+ 105: 0.6703098345697623,
+ 106: 0.6810806521997858,
+ 107: 0.691434918871742,
+ 108: 0.701928035863054,
+ 109: 0.7122624667751022,
+ 110: 0.7218431388106479,
+ 111: 0.7314238108461936,
+ 112: 0.7415003768794383,
+ 113: 0.7509620343555362,
+ 114: 0.7590153528781688,
+ 115: 0.7679216090768437,
+ 116: 0.7753005117626056,
+ 117: 0.782957115087079,
+ 118: 0.7895227516166144,
+ 119: 0.7964454318244932,
+ 120: 0.8019201015590908,
+ 121: 0.807037727615345,
+ 122: 0.8120165033522434,
+ 123: 0.8168167572499703,
+ 124: 0.8208632522711945,
+ 125: 0.8243543460149958,
+ 126: 0.827964454318245,
+ 127: 0.8310985043837029,
+ 128: 0.833696988931646,
+ 129: 0.8363153092394969,
+ 130: 0.838874122267624,
+ 131: 0.8417106359344626,
+ 132: 0.8440115840837863,
+ 133: 0.8463522037529257,
+ 134: 0.8491093743801325,
+ 135: 0.8517673662077995,
+ 136: 0.8545047010750982,
+ 137: 0.856686634664974,
+ 138: 0.8583925100170587,
+ 139: 0.8605546078470266,
+ 140: 0.8623993335184671,
+ 141: 0.8643035664696315,
+ 142: 0.8660491133415321,
+ 143: 0.8678541674931567,
+ 144: 0.8698179077240449,
+ 145: 0.8714246042765899,
+ 146: 0.8731304796286746,
+ 147: 0.8749355337802991,
+ 148: 0.8767405879319237,
+ 149: 0.8782282699250208,
+ 150: 0.8798548022374737,
+ 151: 0.8813821557503868,
+ 152: 0.8830681953425635,
+ 153: 0.8842980124568572,
+ 154: 0.8859443805292181,
+ 155: 0.8871543618836037,
+ 156: 0.8884436862776213,
+ 157: 0.8897726821914548,
+ 158: 0.8911611853850121,
+ 159: 0.8923314952195819,
+ 160: 0.8935414765739675,
+ 161: 0.8950093228071567,
+ 162: 0.89643749752053,
+ 163: 0.8979450152735351,
+ 164: 0.8992740111873686,
+ 165: 0.9009005434998215,
+ 166: 0.9022692109334709,
+ 167: 0.9035585353274884,
+ 168: 0.904828023961598,
+ 169: 0.9056412901178245,
+ 170: 0.9068314357123022,
+ 171: 0.9077637164279764,
+ 172: 0.9087951759431904,
+ 173: 0.9098663069782204,
+ 174: 0.9107589161740787,
+ 175: 0.9118498829690166,
+ 176: 0.9130201928035863,
+ 177: 0.9139524735192606,
+ 178: 0.9148649184750268,
+ 179: 0.9155591700718054,
+ 180: 0.916312928948308,
+ 181: 0.9173047169437061,
+ 182: 0.9184551910183679,
+ 183: 0.9197841869322013,
+ 184: 0.9206966318879676,
+ 185: 0.9215892410838259,
+ 186: 0.9221843138810648,
+ 187: 0.9233347879557265,
+ 188: 0.924148054111953,
+ 189: 0.9250604990677193,
+ 190: 0.9259531082635776,
+ 191: 0.9267068671400801,
+ 192: 0.9275994763359384,
+ 193: 0.9285515928115206,
+ 194: 0.9290078152894037,
+ 195: 0.9297020668861824,
+ 196: 0.9305153330424089,
+ 197: 0.9312690919189114,
+ 198: 0.9319633435156901,
+ 199: 0.9325584163129289,
+ 200: 0.9331931606299837,
+ 201: 0.9336890546276828,
+ 202: 0.9343634704645535,
+ 203: 0.9348792002221605,
+ 204: 0.9353552584599516,
+ 205: 0.9358114809378347,
+ 206: 0.936228031895902,
+ 207: 0.9369619550124966,
+ 208: 0.9375173562899195,
+ 209: 0.9378347284484468,
+ 210: 0.9381719363668822,
+ 211: 0.9386678303645812,
+ 212: 0.9390248740429246,
+ 213: 0.939302574681636,
+ 214: 0.9395802753203475,
+ 215: 0.9400166620383227,
+ 216: 0.9404530487562979,
+ 217: 0.9410084500337208,
+ 218: 0.9415241797913279,
+ 219: 0.9420994168286587,
+ 220: 0.9430912048240568,
+ 221: 0.9442218431388106,
+ 222: 0.9460467330503431,
+ 223: 0.9481691593604951,
+ 224: 0.9501527353512913,
+ 225: 0.9518387749434681,
+ 226: 0.9539413654937121,
+ 227: 0.956083627563772,
+ 228: 0.9581862181140159,
+ 229: 0.9606458523426032,
+ 230: 0.9637203951283374,
+ 231: 0.9670131312730591,
+ 232: 0.9699686594993454,
+ 233: 0.9730233665251716,
+ 234: 0.9761772523505375,
+ 235: 0.9789542587376523,
+ 236: 0.9826040385607172,
+ 237: 0.9857975959058991,
+ 238: 0.9892093466100687,
+ 239: 0.9913119371603126,
+ 240: 0.9934740349902805,
+ 241: 0.9945451660253104,
+ 242: 0.9953782679414448,
+ 243: 0.9961320268179474,
+ 244: 0.9966477565755544,
+ 245: 0.9974610227317808,
+ 246: 0.9978577379299401,
+ 247: 0.9981156028087436,
+ 248: 0.998393303447455,
+ 249: 0.9987106756059825,
+ 250: 0.9990280477645098,
+ 251: 0.9993454199230373,
+ 252: 0.9996627920815646,
+ 253: 0.9998611496806442,
+ 254: 0.9999603284801841,
+ 255: 1.0}
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we are going to plot the pixels histogram and CDF for both the original image and the equalized, to get insights by comparing them.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gray_img_pixels_vector</span> <span class="o">=</span> <span class="n">gray_img_pixels_matrix</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="n">equalized_gray_img_pixels_vector</span> <span class="o">=</span> <span class="n">equalized_gray_img_pixels_matrix</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">axes</span> <span class="o">=</span> <span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> 
+
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">gray_img_pixels_vector</span><span class="p">,</span> <span class="n">stat</span><span class="o">=</span><span class="s1">&#39;count&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">ecdfplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">gray_img_pixels_vector</span><span class="p">,</span> <span class="n">stat</span><span class="o">=</span><span class="s1">&#39;proportion&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">equalized_gray_img_pixels_vector</span><span class="p">,</span> <span class="n">stat</span><span class="o">=</span><span class="s1">&#39;count&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">ecdfplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">equalized_gray_img_pixels_vector</span><span class="p">,</span> <span class="n">stat</span><span class="o">=</span><span class="s1">&#39;proportion&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Histogram of original pixels&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.01</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Normalized ECDF of original pixels&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.01</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Histogram of equalized pixels&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.01</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Normalized ECDF of equalized pixels&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.01</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">axes</span><span class="p">)):</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Pixel Value&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">10.5</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Counts&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">10.5</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]:</span>
+        <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Proportion&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">10.5</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mf">0.31</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mf">0.18</span><span class="p">)</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/529f197465371f7f8761ba8a966a5ec79a64f3b477274584ab4bd48d7cd597f1.png" src="_images/529f197465371f7f8761ba8a966a5ec79a64f3b477274584ab4bd48d7cd597f1.png" />
+</div>
+</div>
+<p>The effect of equalization in the both the histogram and CDF of pixels is pretty evident.</p>
+<p>The next step will be to plot the original images together with the equalized one, to extract more insight about the effects of equalization.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">axes</span> <span class="o">=</span> <span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> 
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">gray_img_pixels_matrix</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">equalized_gray_img_pixels_matrix</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Original image&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Equalized image&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">axes</span><span class="p">)):</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>  <span class="c1"># Hide the axis</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/0653e67ffcf9253d687492aceffd64d4e0498a03a11d767bdd85459bcb451f20.png" src="_images/0653e67ffcf9253d687492aceffd64d4e0498a03a11d767bdd85459bcb451f20.png" />
+</div>
+</div>
+<p>Differences in terms of bright and contrast are pretty clear.</p>
+<p>We can equalize an image just just in one line using the method <code class="docutils literal notranslate"><span class="pre">equalize_hist</span></code> of the <code class="docutils literal notranslate"><span class="pre">exposure</span></code> class contained in <code class="docutils literal notranslate"><span class="pre">skimage</span></code> package:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">equalized_gray_img_pixels_vector</span> <span class="o">=</span> <span class="n">exposure</span><span class="o">.</span><span class="n">equalize_hist</span><span class="p">(</span><span class="n">gray_img_pixels_matrix</span><span class="p">)</span>
+<span class="n">equalized_gray_img_pixels_vector</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.23180069, 0.50567303, 0.74150038, ..., 0.99934542, 0.99966279,
+        0.99966279],
+       [0.13795771, 0.39052644, 0.26901258, ..., 0.99966279, 0.99966279,
+        0.99966279],
+       [0.56016186, 0.67030983, 0.86239933, ..., 0.99934542, 0.99966279,
+        0.99986115],
+       ...,
+       [0.69143492, 0.63740231, 0.59642163, ..., 0.71226247, 0.70192804,
+        0.68108065],
+       [0.63740231, 0.68108065, 0.71226247, ..., 0.79644543, 0.74150038,
+        0.71226247],
+       [0.70192804, 0.69143492, 0.67030983, ..., 0.85176737, 0.8120165 ,
+        0.78295712]])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="equalization-of-color-scale-images-directly">
+<h3><strong>Equalization of color-scale images directly</strong><a class="headerlink" href="#equalization-of-color-scale-images-directly" title="Link to this heading">#</a></h3>
+<p>In this section we are going to see how to equalize color images directly. Later another procedure based on HSV color space will be shown.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">color_img_pixels_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">example_img</span><span class="p">)</span>
+<span class="n">directly_equalized_color_img_pixels_matrix</span><span class="p">,</span> <span class="n">pixels_cdf_norm</span> <span class="o">=</span> <span class="n">get_equalization</span><span class="p">(</span><span class="n">img_array</span><span class="o">=</span><span class="n">color_img_pixels_matrix</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">directly_equalized_color_img_pixels_matrix</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[[0.16106637, 0.45940942, 0.05620132],
+        [0.38729982, 0.72478544, 0.29028973],
+        [0.51822906, 0.84575052, 0.41615424],
+        ...,
+        [0.99933881, 0.99847265, 1.        ],
+        [0.99951072, 0.99886275, 1.        ],
+        [0.99951072, 0.99847265, 1.        ]],
+
+       [[0.05620132, 0.38247973, 0.05620132],
+        [0.29554621, 0.59666627, 0.2098425 ],
+        [0.2098425 , 0.47423996, 0.0987358 ],
+        ...,
+        [0.99918012, 0.99886275, 1.        ],
+        [0.99918012, 0.99886275, 1.        ],
+        [0.99933881, 0.99886275, 1.        ]],
+
+       [[0.39686727, 0.79072612, 0.33831211],
+        [0.45940942, 0.83064228, 0.39217281],
+        [0.7333611 , 0.89567713, 0.58224567],
+        ...,
+        [0.99886275, 0.99886275, 0.99886275],
+        [0.99918012, 0.99886275, 1.        ],
+        [0.99933881, 0.99918012, 1.        ]],
+
+       ...,
+
+       [[0.57520398, 0.7333611 , 0.76511154],
+        [0.54227   , 0.69056876, 0.72478544],
+        [0.51822906, 0.6549834 , 0.69056876],
+        ...,
+        [0.63699898, 0.7333611 , 0.76511154],
+        [0.62854895, 0.72478544, 0.75740204],
+        [0.61237619, 0.7078986 , 0.74147393]],
+
+       [[0.54227   , 0.69056876, 0.72478544],
+        [0.56797715, 0.72478544, 0.75740204],
+        [0.58928076, 0.74967271, 0.77897674],
+        ...,
+        [0.72478544, 0.80147049, 0.81823171],
+        [0.66380371, 0.75740204, 0.78521839],
+        [0.63699898, 0.7333611 , 0.76511154]],
+
+       [[0.58224567, 0.74147393, 0.77209373],
+        [0.57520398, 0.7333611 , 0.76511154],
+        [0.56127266, 0.71630235, 0.74967271],
+        ...,
+        [0.82168313, 0.85052433, 0.85902064],
+        [0.74967271, 0.81456209, 0.82785866],
+        [0.7078986 , 0.79072612, 0.81058833]]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">color_img_pixels_matrix</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[[ 17,  73,   0],
+        [ 58, 111,  39],
+        [ 84, 136,  64],
+        ...,
+        [253, 250, 255],
+        [254, 251, 255],
+        [254, 250, 255]],
+
+       [[  0,  57,   0],
+        [ 40,  96,  25],
+        [ 25,  76,   7],
+        ...,
+        [252, 251, 255],
+        [252, 251, 255],
+        [253, 251, 255]],
+
+       [[ 60, 120,  48],
+        [ 73, 130,  59],
+        [112, 163,  94],
+        ...,
+        [251, 251, 251],
+        [252, 251, 255],
+        [253, 252, 255]],
+
+       ...,
+
+       [[ 93, 112, 116],
+        [ 88, 107, 111],
+        [ 84, 103, 107],
+        ...,
+        [101, 112, 116],
+        [100, 111, 115],
+        [ 98, 109, 113]],
+
+       [[ 88, 107, 111],
+        [ 92, 111, 115],
+        [ 95, 114, 118],
+        ...,
+        [111, 122, 126],
+        [104, 115, 119],
+        [101, 112, 116]],
+
+       [[ 94, 113, 117],
+        [ 93, 112, 116],
+        [ 91, 110, 114],
+        ...,
+        [127, 138, 142],
+        [114, 125, 129],
+        [109, 120, 124]]], dtype=uint8)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">color_img_pixels_matrix</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(182, 277, 3)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">directly_equalized_color_img_pixels_matrix</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(182, 277, 3)
+</pre></div>
+</div>
+</div>
+</div>
+<p>As before, we plot both images to see the effect of equalization, but now in color images.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+<span class="n">axes</span> <span class="o">=</span> <span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> 
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">color_img_pixels_matrix</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">directly_equalized_color_img_pixels_matrix</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Original color image&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Directly-Equalized color image&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">axes</span><span class="p">)):</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>  <span class="c1"># Hide the axis</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/07139b5a34b180a1082f05eecea27cba855c353c9eb5addfe7c010480017866e.png" src="_images/07139b5a34b180a1082f05eecea27cba855c353c9eb5addfe7c010480017866e.png" />
+</div>
+</div>
+<p>Again, the effect is crystal clear, specially in terms of bright and contrast.</p>
+<p>As was mentioned before, same result can be achieved using <code class="docutils literal notranslate"><span class="pre">skimage</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">directly_equalized_color_img_pixels_matrix</span> <span class="o">=</span> <span class="n">exposure</span><span class="o">.</span><span class="n">equalize_hist</span><span class="p">(</span><span class="n">color_img_pixels_matrix</span><span class="p">)</span>
+<span class="n">directly_equalized_color_img_pixels_matrix</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>c:\Users\fscielzo\anaconda3\Lib\site-packages\skimage\_shared\utils.py:326: UserWarning: This might be a color image. The histogram will be computed on the flattened image. You can instead apply this function to each color channel, or set channel_axis.
+  return func(*args, **kwargs)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[[0.16106637, 0.45940942, 0.05620132],
+        [0.38729982, 0.72478544, 0.29028973],
+        [0.51822906, 0.84575052, 0.41615424],
+        ...,
+        [0.99933881, 0.99847265, 1.        ],
+        [0.99951072, 0.99886275, 1.        ],
+        [0.99951072, 0.99847265, 1.        ]],
+
+       [[0.05620132, 0.38247973, 0.05620132],
+        [0.29554621, 0.59666627, 0.2098425 ],
+        [0.2098425 , 0.47423996, 0.0987358 ],
+        ...,
+        [0.99918012, 0.99886275, 1.        ],
+        [0.99918012, 0.99886275, 1.        ],
+        [0.99933881, 0.99886275, 1.        ]],
+
+       [[0.39686727, 0.79072612, 0.33831211],
+        [0.45940942, 0.83064228, 0.39217281],
+        [0.7333611 , 0.89567713, 0.58224567],
+        ...,
+        [0.99886275, 0.99886275, 0.99886275],
+        [0.99918012, 0.99886275, 1.        ],
+        [0.99933881, 0.99918012, 1.        ]],
+
+       ...,
+
+       [[0.57520398, 0.7333611 , 0.76511154],
+        [0.54227   , 0.69056876, 0.72478544],
+        [0.51822906, 0.6549834 , 0.69056876],
+        ...,
+        [0.63699898, 0.7333611 , 0.76511154],
+        [0.62854895, 0.72478544, 0.75740204],
+        [0.61237619, 0.7078986 , 0.74147393]],
+
+       [[0.54227   , 0.69056876, 0.72478544],
+        [0.56797715, 0.72478544, 0.75740204],
+        [0.58928076, 0.74967271, 0.77897674],
+        ...,
+        [0.72478544, 0.80147049, 0.81823171],
+        [0.66380371, 0.75740204, 0.78521839],
+        [0.63699898, 0.7333611 , 0.76511154]],
+
+       [[0.58224567, 0.74147393, 0.77209373],
+        [0.57520398, 0.7333611 , 0.76511154],
+        [0.56127266, 0.71630235, 0.74967271],
+        ...,
+        [0.82168313, 0.85052433, 0.85902064],
+        [0.74967271, 0.81456209, 0.82785866],
+        [0.7078986 , 0.79072612, 0.81058833]]])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="equalization-of-color-scale-images-with-hsv">
+<h3><strong>Equalization of color-scale images with HSV</strong><a class="headerlink" href="#equalization-of-color-scale-images-with-hsv" title="Link to this heading">#</a></h3>
+<p>HSV stands for Hue, Saturation, and Value (or Brightness), and it’s a color space commonly used in image processing and computer vision. It represents colors in a cylindrical coordinate system, making it particularly intuitive for tasks such as color selection, image segmentation, and color-based feature extraction.</p>
+<p>Here’s a brief explanation of each component of the HSV color space:</p>
+<ul class="simple">
+<li><p><strong>Hue (H)</strong>: This represents the type of color, such as red, green, blue, etc. It’s often measured in degrees ranging from 0 to 360, where 0 and 360 both correspond to red, 120 to green, and 240 to blue. The hue value essentially describes the dominant wavelength of light that gives the color its perceived hue.</p></li>
+<li><p><strong>Saturation (S)</strong>: This component represents the intensity or purity of the color. It quantifies how much white light is mixed with the hue. A saturation value of 0 indicates a completely unsaturated (gray) color, while a value of 1 represents the most vivid version of that color.</p></li>
+<li><p><strong>Value (V)</strong> (Brightness): This represents the brightness or intensity of the color. It indicates how much light is emitted by the color. A value of 0 represents black (no light), while a value of 1 represents the brightest possible version of the color.</p></li>
+</ul>
+<p>By representing colors in terms of hue, saturation, and value, rather than the RGB (Red, Green, Blue) color space, HSV separates the information about color type, intensity, and brightness. This makes it easier to manipulate and interpret colors for various image processing tasks, such as adjusting color balance, detecting objects based on color, or segmenting regions of interest in an image based on their color characteristics.</p>
+<p>The custom function <code class="docutils literal notranslate"><span class="pre">get_V_component</span></code> returns the HSV pixels array for a given RGB pixels arrays, as well as the V component of that array, that is, its third column. This component has an important role, since will allow as to equalize and filter color images in a suitable way.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">V_component</span><span class="p">,</span> <span class="n">img_array_HSV</span> <span class="o">=</span> <span class="n">get_V_component</span><span class="p">(</span><span class="n">color_img_pixels_matrix</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img_array_HSV</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[[0.29452055, 1.        , 0.28627451],
+        [0.28935185, 0.64864865, 0.43529412],
+        [0.28703704, 0.52941176, 0.53333333],
+        ...,
+        [0.76666667, 0.01960784, 1.        ],
+        [0.79166667, 0.01568627, 1.        ],
+        [0.8       , 0.01960784, 1.        ]],
+
+       [[0.33333333, 1.        , 0.22352941],
+        [0.29812207, 0.73958333, 0.37647059],
+        [0.28985507, 0.90789474, 0.29803922],
+        ...,
+        [0.70833333, 0.01568627, 1.        ],
+        [0.70833333, 0.01568627, 1.        ],
+        [0.75      , 0.01568627, 1.        ]],
+
+       [[0.30555556, 0.6       , 0.47058824],
+        [0.30046948, 0.54615385, 0.50980392],
+        [0.28985507, 0.42331288, 0.63921569],
+        ...,
+        [0.        , 0.        , 0.98431373],
+        [0.70833333, 0.01568627, 1.        ],
+        [0.72222222, 0.01176471, 1.        ]],
+
+       ...,
+
+       [[0.52898551, 0.19827586, 0.45490196],
+        [0.52898551, 0.20720721, 0.43529412],
+        [0.52898551, 0.21495327, 0.41960784],
+        ...,
+        [0.54444444, 0.12931034, 0.45490196],
+        [0.54444444, 0.13043478, 0.45098039],
+        [0.54444444, 0.13274336, 0.44313725]],
+
+       [[0.52898551, 0.20720721, 0.43529412],
+        [0.52898551, 0.2       , 0.45098039],
+        [0.52898551, 0.19491525, 0.4627451 ],
+        ...,
+        [0.54444444, 0.11904762, 0.49411765],
+        [0.54444444, 0.12605042, 0.46666667],
+        [0.54444444, 0.12931034, 0.45490196]],
+
+       [[0.52898551, 0.1965812 , 0.45882353],
+        [0.52898551, 0.19827586, 0.45490196],
+        [0.52898551, 0.20175439, 0.44705882],
+        ...,
+        [0.54444444, 0.1056338 , 0.55686275],
+        [0.54444444, 0.11627907, 0.50588235],
+        [0.54444444, 0.12096774, 0.48627451]]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">color_img_pixels_matrix</span> <span class="c1"># RBG array</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[[ 17,  73,   0],
+        [ 58, 111,  39],
+        [ 84, 136,  64],
+        ...,
+        [253, 250, 255],
+        [254, 251, 255],
+        [254, 250, 255]],
+
+       [[  0,  57,   0],
+        [ 40,  96,  25],
+        [ 25,  76,   7],
+        ...,
+        [252, 251, 255],
+        [252, 251, 255],
+        [253, 251, 255]],
+
+       [[ 60, 120,  48],
+        [ 73, 130,  59],
+        [112, 163,  94],
+        ...,
+        [251, 251, 251],
+        [252, 251, 255],
+        [253, 252, 255]],
+
+       ...,
+
+       [[ 93, 112, 116],
+        [ 88, 107, 111],
+        [ 84, 103, 107],
+        ...,
+        [101, 112, 116],
+        [100, 111, 115],
+        [ 98, 109, 113]],
+
+       [[ 88, 107, 111],
+        [ 92, 111, 115],
+        [ 95, 114, 118],
+        ...,
+        [111, 122, 126],
+        [104, 115, 119],
+        [101, 112, 116]],
+
+       [[ 94, 113, 117],
+        [ 93, 112, 116],
+        [ 91, 110, 114],
+        ...,
+        [127, 138, 142],
+        [114, 125, 129],
+        [109, 120, 124]]], dtype=uint8)
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>H component:  a matrix with the first column of the 2D array <code class="docutils literal notranslate"><span class="pre">img_array_HSV[i]</span></code> as i-th row.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img_array_HSV</span><span class="p">[:,:,</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.29452055, 0.28935185, 0.28703704, ..., 0.76666667, 0.79166667,
+        0.8       ],
+       [0.33333333, 0.29812207, 0.28985507, ..., 0.70833333, 0.70833333,
+        0.75      ],
+       [0.30555556, 0.30046948, 0.28985507, ..., 0.        , 0.70833333,
+        0.72222222],
+       ...,
+       [0.52898551, 0.52898551, 0.52898551, ..., 0.54444444, 0.54444444,
+        0.54444444],
+       [0.52898551, 0.52898551, 0.52898551, ..., 0.54444444, 0.54444444,
+        0.54444444],
+       [0.52898551, 0.52898551, 0.52898551, ..., 0.54444444, 0.54444444,
+        0.54444444]])
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>S component:  a matrix with the second column of the 2D array <code class="docutils literal notranslate"><span class="pre">img_array_HSV[i]</span></code> as i-th row.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img_array_HSV</span><span class="p">[:,:,</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[1.        , 0.64864865, 0.52941176, ..., 0.01960784, 0.01568627,
+        0.01960784],
+       [1.        , 0.73958333, 0.90789474, ..., 0.01568627, 0.01568627,
+        0.01568627],
+       [0.6       , 0.54615385, 0.42331288, ..., 0.        , 0.01568627,
+        0.01176471],
+       ...,
+       [0.19827586, 0.20720721, 0.21495327, ..., 0.12931034, 0.13043478,
+        0.13274336],
+       [0.20720721, 0.2       , 0.19491525, ..., 0.11904762, 0.12605042,
+        0.12931034],
+       [0.1965812 , 0.19827586, 0.20175439, ..., 0.1056338 , 0.11627907,
+        0.12096774]])
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>V component: a matrix with the third column of the 2D array <code class="docutils literal notranslate"><span class="pre">img_array_HSV[i]</span></code> as i-th row.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img_array_HSV</span><span class="p">[:,:,</span><span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.28627451, 0.43529412, 0.53333333, ..., 1.        , 1.        ,
+        1.        ],
+       [0.22352941, 0.37647059, 0.29803922, ..., 1.        , 1.        ,
+        1.        ],
+       [0.47058824, 0.50980392, 0.63921569, ..., 0.98431373, 1.        ,
+        1.        ],
+       ...,
+       [0.45490196, 0.43529412, 0.41960784, ..., 0.45490196, 0.45098039,
+        0.44313725],
+       [0.43529412, 0.45098039, 0.4627451 , ..., 0.49411765, 0.46666667,
+        0.45490196],
+       [0.45882353, 0.45490196, 0.44705882, ..., 0.55686275, 0.50588235,
+        0.48627451]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">V_component</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.28627451, 0.43529412, 0.53333333, ..., 1.        , 1.        ,
+        1.        ],
+       [0.22352941, 0.37647059, 0.29803922, ..., 1.        , 1.        ,
+        1.        ],
+       [0.47058824, 0.50980392, 0.63921569, ..., 0.98431373, 1.        ,
+        1.        ],
+       ...,
+       [0.45490196, 0.43529412, 0.41960784, ..., 0.45490196, 0.45098039,
+        0.44313725],
+       [0.43529412, 0.45098039, 0.4627451 , ..., 0.49411765, 0.46666667,
+        0.45490196],
+       [0.45882353, 0.45490196, 0.44705882, ..., 0.55686275, 0.50588235,
+        0.48627451]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">V_component</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(182, 277)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The custom function <code class="docutils literal notranslate"><span class="pre">equalize_color_image_HSV</span></code> perform the operation of equalizing a color image based on HSV color space.</p>
+<p>The basic pipeline is the following:</p>
+<p>Color image <span class="math notranslate nohighlight">\(\hspace{0.1cm}\Rightarrow\hspace{0.1cm}\)</span> RGB pixels array <span class="math notranslate nohighlight">\(\hspace{0.1cm}\Rightarrow\hspace{0.1cm}\)</span> HSV pixels array <span class="math notranslate nohighlight">\(\hspace{0.1cm}\Rightarrow\hspace{0.1cm}\)</span> Equalize V component (is a gray image) <span class="math notranslate nohighlight">\(\hspace{0.1cm}\Rightarrow\hspace{0.1cm}\)</span> Update HSV pixels array with the equalized V component <span class="math notranslate nohighlight">\(\hspace{0.1cm}\Rightarrow\hspace{0.1cm}\)</span> Convert HSV to RGB <span class="math notranslate nohighlight">\(\hspace{0.1cm}\Rightarrow\hspace{0.1cm}\)</span> Equalized RGB pixels matrix.</p>
+<p>Above pipeline is visualized in the following plot.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">V_component_equalized</span> <span class="o">=</span> <span class="n">exposure</span><span class="o">.</span><span class="n">equalize_hist</span><span class="p">(</span><span class="n">V_component</span><span class="p">)</span>
+<span class="n">HSV_equalized_color_img_pixels_matrix</span> <span class="o">=</span> <span class="n">equalize_color_image_HSV</span><span class="p">(</span><span class="n">color_img_pixels_matrix</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">axes</span> <span class="o">=</span> <span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> 
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">color_img_pixels_matrix</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_array_HSV</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">V_component</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">V_component_equalized</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">HSV_equalized_color_img_pixels_matrix</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;RGB image&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;HSV image&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;V component of HSV&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Equalized V component&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;HSV-Equalized RGB image&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">axes</span><span class="p">)):</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>  <span class="c1"># Hide the axis</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/6f5a699f1703d6d93911828c7f9490434faf0c85260be55cd8225bb1756600ee.png" src="_images/6f5a699f1703d6d93911828c7f9490434faf0c85260be55cd8225bb1756600ee.png" />
+</div>
+</div>
+<section id="comparison-of-equalization-approaches">
+<h4><strong>Comparison of equalization approaches</strong><a class="headerlink" href="#comparison-of-equalization-approaches" title="Link to this heading">#</a></h4>
+<p>The following plot is meaningful in order to visualize differences between equalizing a color image directly and with HSV method.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">17</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+<span class="n">axes</span> <span class="o">=</span> <span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> 
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">color_img_pixels_matrix</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">directly_equalized_color_img_pixels_matrix</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">HSV_equalized_color_img_pixels_matrix</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Original image&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Directly-Equalized color image&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;HSV-Equalized color image&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">axes</span><span class="p">)):</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>  <span class="c1"># Hide the axis</span>
+    
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>     
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/56b334318cb80cd67b5cedd25a8f9731f405da2b1c35e8f8016b9efd38160bb9.png" src="_images/56b334318cb80cd67b5cedd25a8f9731f405da2b1c35e8f8016b9efd38160bb9.png" />
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="other-filters">
+<h2><strong>Other Filters</strong><a class="headerlink" href="#other-filters" title="Link to this heading">#</a></h2>
+<p>In this section other filters beyond equalization will be presented, but not as deeply.</p>
+<p>The filters that will be presented in a practical manner are the following:</p>
+<ul class="simple">
+<li><p>Sobel</p></li>
+<li><p>Canny</p></li>
+<li><p>Convolve1</p></li>
+<li><p>Gaussian</p></li>
+<li><p>Hessian</p></li>
+<li><p>Noisy</p></li>
+<li><p>Butterworth</p></li>
+<li><p>Correlate1</p></li>
+<li><p>Prewitt</p></li>
+<li><p>Bilateral</p></li>
+<li><p>Erosion</p></li>
+<li><p>Dilation</p></li>
+</ul>
+<p>By practical manner we referred that we are not going to explain the theory behind these filters, let say, how these filters actually work, but only the visual effect of applying them will be shown.</p>
+<p>These filter can be applied both in color and gray images.</p>
+<section id="filtering-gray-scale-images">
+<h3><strong>Filtering gray-scale images</strong><a class="headerlink" href="#filtering-gray-scale-images" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gray_img_pixels_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">example_img</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s1">&#39;L&#39;</span><span class="p">))</span>
+
+<span class="n">mask_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span> <span class="o">*</span> <span class="mi">1</span><span class="o">/</span><span class="mi">9</span> 
+<span class="n">mask_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="n">mask_3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+
+<span class="n">filtered_img_pixels_matrix</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">filtered_img_pixels_matrix</span><span class="p">[</span><span class="s1">&#39;sobel&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">apply_filter</span><span class="p">(</span><span class="n">img_array</span><span class="o">=</span><span class="n">gray_img_pixels_matrix</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;sobel&#39;</span><span class="p">,</span> <span class="n">gray_img</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">filtered_img_pixels_matrix</span><span class="p">[</span><span class="s1">&#39;canny&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">apply_filter</span><span class="p">(</span><span class="n">img_array</span><span class="o">=</span><span class="n">gray_img_pixels_matrix</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;canny&#39;</span><span class="p">,</span> <span class="n">gray_img</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">filtered_img_pixels_matrix</span><span class="p">[</span><span class="s1">&#39;convolve1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">apply_filter</span><span class="p">(</span><span class="n">img_array</span><span class="o">=</span><span class="n">gray_img_pixels_matrix</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;convolve&#39;</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">mask_1</span><span class="p">,</span> <span class="n">gray_img</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">filtered_img_pixels_matrix</span><span class="p">[</span><span class="s1">&#39;convolve2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">apply_filter</span><span class="p">(</span><span class="n">img_array</span><span class="o">=</span><span class="n">gray_img_pixels_matrix</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;convolve&#39;</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">mask_2</span><span class="p">,</span> <span class="n">gray_img</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">filtered_img_pixels_matrix</span><span class="p">[</span><span class="s1">&#39;convolve3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">apply_filter</span><span class="p">(</span><span class="n">img_array</span><span class="o">=</span><span class="n">gray_img_pixels_matrix</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;convolve&#39;</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">mask_3</span><span class="p">,</span> <span class="n">gray_img</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">filtered_img_pixels_matrix</span><span class="p">[</span><span class="s1">&#39;gaussian&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">apply_filter</span><span class="p">(</span><span class="n">img_array</span><span class="o">=</span><span class="n">gray_img_pixels_matrix</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;gaussian&#39;</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">gray_img</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">filtered_img_pixels_matrix</span><span class="p">[</span><span class="s1">&#39;hessian&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">apply_filter</span><span class="p">(</span><span class="n">img_array</span><span class="o">=</span><span class="n">gray_img_pixels_matrix</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;hessian&#39;</span><span class="p">,</span> <span class="n">gray_img</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">filtered_img_pixels_matrix</span><span class="p">[</span><span class="s1">&#39;noisy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">apply_filter</span><span class="p">(</span><span class="n">img_array</span><span class="o">=</span><span class="n">gray_img_pixels_matrix</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;noisy&#39;</span><span class="p">,</span> <span class="n">gray_img</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">filtered_img_pixels_matrix</span><span class="p">[</span><span class="s1">&#39;butterworth&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">apply_filter</span><span class="p">(</span><span class="n">img_array</span><span class="o">=</span><span class="n">gray_img_pixels_matrix</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;butterworth&#39;</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">gray_img</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">filtered_img_pixels_matrix</span><span class="p">[</span><span class="s1">&#39;correlate1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">apply_filter</span><span class="p">(</span><span class="n">img_array</span><span class="o">=</span><span class="n">gray_img_pixels_matrix</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;correlate&#39;</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">mask_1</span><span class="p">,</span> <span class="n">gray_img</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">filtered_img_pixels_matrix</span><span class="p">[</span><span class="s1">&#39;correlate2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">apply_filter</span><span class="p">(</span><span class="n">img_array</span><span class="o">=</span><span class="n">gray_img_pixels_matrix</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;correlate&#39;</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">mask_2</span><span class="p">,</span> <span class="n">gray_img</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">filtered_img_pixels_matrix</span><span class="p">[</span><span class="s1">&#39;correlate3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">apply_filter</span><span class="p">(</span><span class="n">img_array</span><span class="o">=</span><span class="n">gray_img_pixels_matrix</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;correlate&#39;</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">mask_3</span><span class="p">,</span> <span class="n">gray_img</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">filtered_img_pixels_matrix</span><span class="p">[</span><span class="s1">&#39;prewitt&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">apply_filter</span><span class="p">(</span><span class="n">img_array</span><span class="o">=</span><span class="n">gray_img_pixels_matrix</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;prewitt&#39;</span><span class="p">,</span> <span class="n">gray_img</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">filtered_img_pixels_matrix</span><span class="p">[</span><span class="s1">&#39;bilateral&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">apply_filter</span><span class="p">(</span><span class="n">img_array</span><span class="o">=</span><span class="n">gray_img_pixels_matrix</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;bilateral&#39;</span><span class="p">,</span> <span class="n">gray_img</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">filtered_img_pixels_matrix</span><span class="p">[</span><span class="s1">&#39;erosion&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">apply_filter</span><span class="p">(</span><span class="n">img_array</span><span class="o">=</span><span class="n">gray_img_pixels_matrix</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;erosion&#39;</span><span class="p">,</span> <span class="n">gray_img</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">filtered_img_pixels_matrix</span><span class="p">[</span><span class="s1">&#39;dilation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">apply_filter</span><span class="p">(</span><span class="n">img_array</span><span class="o">=</span><span class="n">gray_img_pixels_matrix</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;dilation&#39;</span><span class="p">,</span> <span class="n">gray_img</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">filtered_img_pixels_matrix</span><span class="p">[</span><span class="s1">&#39;equalized&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">apply_filter</span><span class="p">(</span><span class="n">img_array</span><span class="o">=</span><span class="n">gray_img_pixels_matrix</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;equalized&#39;</span><span class="p">,</span> <span class="n">gray_img</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\fscielzo\Documents\Packages\PyImageML_Package_Private\PyImageML\preprocessing.py:134: UserWarning: Possible precision loss converting image of type float64 to uint8 as required by rank filters. Convert manually using skimage.util.img_as_ubyte to silence this warning.
+  img_array = filter_gray_image(img_array=img_array, filter=filter, weights=weights, sigma=sigma)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">images_to_plot</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Original Image&#39;</span><span class="p">:</span> <span class="n">gray_img_pixels_matrix</span><span class="p">}</span>
+<span class="n">images_to_plot</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="sa">f</span><span class="s1">&#39;Filtered image</span><span class="se">\n</span><span class="si">{</span><span class="nb">filter</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">:</span> <span class="n">filtered_img_pixels_matrix</span><span class="p">[</span><span class="nb">filter</span><span class="p">]</span> <span class="k">for</span> <span class="nb">filter</span> <span class="ow">in</span> <span class="n">filtered_img_pixels_matrix</span><span class="o">.</span><span class="n">keys</span><span class="p">()})</span>
+<span class="n">n_subplots</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">images_to_plot</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+<span class="n">n_rows</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">n_cols</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">n_rows</span><span class="p">,</span> <span class="n">n_cols</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">17</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">axes</span> <span class="o">=</span> <span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> 
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">images_to_plot</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>  <span class="c1"># Hide the axis   </span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> 
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_subplots</span><span class="p">,</span> <span class="n">n_rows</span> <span class="o">*</span> <span class="n">n_cols</span><span class="p">):</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">delaxes</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/1e2616ccaefb506d94bf040c8249597eeb4506921039b9e585b58ae8d52cea11.png" src="_images/1e2616ccaefb506d94bf040c8249597eeb4506921039b9e585b58ae8d52cea11.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_subplots</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">images_to_plot</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+<span class="n">n_rows</span> <span class="o">=</span> <span class="n">n_subplots</span>
+<span class="n">n_cols</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">n_rows</span><span class="p">,</span> <span class="n">n_cols</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">100</span><span class="p">))</span>
+<span class="n">axes</span> <span class="o">=</span> <span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> 
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">images_to_plot</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>  <span class="c1"># Hide the axis   </span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mf">0.075</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mf">0.015</span><span class="p">)</span> 
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_subplots</span><span class="p">,</span> <span class="n">n_rows</span> <span class="o">*</span> <span class="n">n_cols</span><span class="p">):</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">delaxes</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/f67ca02dacb55116e9bb64b1032cb7c62b69ae7c1f9a35ba03a60fc4427d33cf.png" src="_images/f67ca02dacb55116e9bb64b1032cb7c62b69ae7c1f9a35ba03a60fc4427d33cf.png" />
+</div>
+</div>
+</section>
+<section id="filtering-color-images">
+<h3><strong>Filtering color images</strong><a class="headerlink" href="#filtering-color-images" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">color_img_pixels_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">example_img</span><span class="p">)</span>
+
+<span class="n">mask_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span> <span class="o">*</span> <span class="mi">1</span><span class="o">/</span><span class="mi">9</span> 
+<span class="n">mask_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="n">mask_3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+
+<span class="n">filtered_img_pixels_matrix</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">filtered_img_pixels_matrix</span><span class="p">[</span><span class="s1">&#39;sobel&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">apply_filter</span><span class="p">(</span><span class="n">img_array</span><span class="o">=</span><span class="n">color_img_pixels_matrix</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;sobel&#39;</span><span class="p">,</span> <span class="n">gray_img</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">filtered_img_pixels_matrix</span><span class="p">[</span><span class="s1">&#39;canny&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">apply_filter</span><span class="p">(</span><span class="n">img_array</span><span class="o">=</span><span class="n">color_img_pixels_matrix</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;canny&#39;</span><span class="p">,</span> <span class="n">gray_img</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">filtered_img_pixels_matrix</span><span class="p">[</span><span class="s1">&#39;convolve1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">apply_filter</span><span class="p">(</span><span class="n">img_array</span><span class="o">=</span><span class="n">color_img_pixels_matrix</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;convolve&#39;</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">mask_1</span><span class="p">,</span> <span class="n">gray_img</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">filtered_img_pixels_matrix</span><span class="p">[</span><span class="s1">&#39;convolve2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">apply_filter</span><span class="p">(</span><span class="n">img_array</span><span class="o">=</span><span class="n">color_img_pixels_matrix</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;convolve&#39;</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">mask_2</span><span class="p">,</span> <span class="n">gray_img</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">filtered_img_pixels_matrix</span><span class="p">[</span><span class="s1">&#39;convolve3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">apply_filter</span><span class="p">(</span><span class="n">img_array</span><span class="o">=</span><span class="n">color_img_pixels_matrix</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;convolve&#39;</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">mask_3</span><span class="p">,</span> <span class="n">gray_img</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">filtered_img_pixels_matrix</span><span class="p">[</span><span class="s1">&#39;gaussian&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">apply_filter</span><span class="p">(</span><span class="n">img_array</span><span class="o">=</span><span class="n">color_img_pixels_matrix</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;gaussian&#39;</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">gray_img</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">filtered_img_pixels_matrix</span><span class="p">[</span><span class="s1">&#39;hessian&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">apply_filter</span><span class="p">(</span><span class="n">img_array</span><span class="o">=</span><span class="n">color_img_pixels_matrix</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;hessian&#39;</span><span class="p">,</span> <span class="n">gray_img</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">filtered_img_pixels_matrix</span><span class="p">[</span><span class="s1">&#39;noisy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">apply_filter</span><span class="p">(</span><span class="n">img_array</span><span class="o">=</span><span class="n">color_img_pixels_matrix</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;noisy&#39;</span><span class="p">,</span> <span class="n">gray_img</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">filtered_img_pixels_matrix</span><span class="p">[</span><span class="s1">&#39;butterworth&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">apply_filter</span><span class="p">(</span><span class="n">img_array</span><span class="o">=</span><span class="n">color_img_pixels_matrix</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;butterworth&#39;</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">gray_img</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">filtered_img_pixels_matrix</span><span class="p">[</span><span class="s1">&#39;correlate1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">apply_filter</span><span class="p">(</span><span class="n">img_array</span><span class="o">=</span><span class="n">color_img_pixels_matrix</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;correlate&#39;</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">mask_1</span><span class="p">,</span> <span class="n">gray_img</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">filtered_img_pixels_matrix</span><span class="p">[</span><span class="s1">&#39;correlate2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">apply_filter</span><span class="p">(</span><span class="n">img_array</span><span class="o">=</span><span class="n">color_img_pixels_matrix</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;correlate&#39;</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">mask_2</span><span class="p">,</span> <span class="n">gray_img</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">filtered_img_pixels_matrix</span><span class="p">[</span><span class="s1">&#39;correlate3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">apply_filter</span><span class="p">(</span><span class="n">img_array</span><span class="o">=</span><span class="n">color_img_pixels_matrix</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;correlate&#39;</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">mask_3</span><span class="p">,</span> <span class="n">gray_img</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">filtered_img_pixels_matrix</span><span class="p">[</span><span class="s1">&#39;prewitt&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">apply_filter</span><span class="p">(</span><span class="n">img_array</span><span class="o">=</span><span class="n">color_img_pixels_matrix</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;prewitt&#39;</span><span class="p">,</span> <span class="n">gray_img</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">filtered_img_pixels_matrix</span><span class="p">[</span><span class="s1">&#39;bilateral&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">apply_filter</span><span class="p">(</span><span class="n">img_array</span><span class="o">=</span><span class="n">color_img_pixels_matrix</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;bilateral&#39;</span><span class="p">,</span> <span class="n">gray_img</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">filtered_img_pixels_matrix</span><span class="p">[</span><span class="s1">&#39;erosion&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">apply_filter</span><span class="p">(</span><span class="n">img_array</span><span class="o">=</span><span class="n">color_img_pixels_matrix</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;erosion&#39;</span><span class="p">,</span> <span class="n">gray_img</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">filtered_img_pixels_matrix</span><span class="p">[</span><span class="s1">&#39;dilation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">apply_filter</span><span class="p">(</span><span class="n">img_array</span><span class="o">=</span><span class="n">color_img_pixels_matrix</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;dilation&#39;</span><span class="p">,</span> <span class="n">gray_img</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">filtered_img_pixels_matrix</span><span class="p">[</span><span class="s1">&#39;equalized&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">apply_filter</span><span class="p">(</span><span class="n">img_array</span><span class="o">=</span><span class="n">color_img_pixels_matrix</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;equalized&#39;</span><span class="p">,</span> <span class="n">gray_img</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\fscielzo\Documents\Packages\PyImageML_Package_Private\PyImageML\preprocessing.py:141: UserWarning: Possible precision loss converting image of type float64 to uint8 as required by rank filters. Convert manually using skimage.util.img_as_ubyte to silence this warning.
+  img_array = filter_color_image(img_array=img_array, filter=filter, weights=weights, sigma=sigma)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">images_to_plot</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Original Image&#39;</span><span class="p">:</span> <span class="n">gray_img_pixels_matrix</span><span class="p">}</span>
+<span class="n">images_to_plot</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="sa">f</span><span class="s1">&#39;Filtered image</span><span class="se">\n</span><span class="si">{</span><span class="nb">filter</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">:</span> <span class="n">filtered_img_pixels_matrix</span><span class="p">[</span><span class="nb">filter</span><span class="p">]</span> <span class="k">for</span> <span class="nb">filter</span> <span class="ow">in</span> <span class="n">filtered_img_pixels_matrix</span><span class="o">.</span><span class="n">keys</span><span class="p">()})</span>
+<span class="n">n_subplots</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">images_to_plot</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+<span class="n">n_rows</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">n_cols</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">n_rows</span><span class="p">,</span> <span class="n">n_cols</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">17</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">axes</span> <span class="o">=</span> <span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> 
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">images_to_plot</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>  <span class="c1"># Hide the axis   </span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> 
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_subplots</span><span class="p">,</span> <span class="n">n_rows</span> <span class="o">*</span> <span class="n">n_cols</span><span class="p">):</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">delaxes</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+</pre></div>
+</div>
+<img alt="_images/a0746a706b6892636db568a6badafc9e531756a3b58903f91b42ba793a1b6249.png" src="_images/a0746a706b6892636db568a6badafc9e531756a3b58903f91b42ba793a1b6249.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_subplots</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">images_to_plot</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+<span class="n">n_rows</span> <span class="o">=</span> <span class="n">n_subplots</span>
+<span class="n">n_cols</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">n_rows</span><span class="p">,</span> <span class="n">n_cols</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">100</span><span class="p">))</span>
+<span class="n">axes</span> <span class="o">=</span> <span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> 
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">images_to_plot</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>  <span class="c1"># Hide the axis   </span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mf">0.075</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mf">0.015</span><span class="p">)</span> 
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_subplots</span><span class="p">,</span> <span class="n">n_rows</span> <span class="o">*</span> <span class="n">n_cols</span><span class="p">):</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">delaxes</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+</pre></div>
+</div>
+<img alt="_images/7843f6b98c1148a0de405f63f33304fc0ed811672c3765e853c0cfad52f948fa.png" src="_images/7843f6b98c1148a0de405f63f33304fc0ed811672c3765e853c0cfad52f948fa.png" />
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="images_processing.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><strong>Images Processing</strong></p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Features_extraction_methods.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><strong>Feature Extraction Methods for Images</strong></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#requirements"><strong>Requirements</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-the-data"><strong>Reading the data</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#defining-response-and-predictors"><strong>Defining Response and Predictors</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#equalization"><strong>Equalization</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#equalization-of-gray-scale-images"><strong>Equalization of gray-scale images</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#equalization-of-color-scale-images-directly"><strong>Equalization of color-scale images directly</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#equalization-of-color-scale-images-with-hsv"><strong>Equalization of color-scale images with HSV</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-of-equalization-approaches"><strong>Comparison of equalization approaches</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-filters"><strong>Other Filters</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-gray-scale-images"><strong>Filtering gray-scale images</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-color-images"><strong>Filtering color images</strong></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Fabio Scielzo Ortiz
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

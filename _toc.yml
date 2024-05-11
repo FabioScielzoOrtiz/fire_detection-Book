@@ -1,0 +1,13 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: intro
+chapters:
+- file: images_processing
+- file: Filtering_images
+- file: Features_extraction_methods
+- file: Inner_evaluation
+- file: Selecting_best_pipeline
+- file: Outer_evaluation
+- file: Predicting_new_data
