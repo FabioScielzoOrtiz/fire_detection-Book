@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
@@ -443,128 +443,97 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold">1/1</span> <span class=" -Color -Color-Green">━━━━━━━━━━━━━━━━━━━━</span> <span class=" -Color -Color-Bold">0s</span> 260ms/step
+<span class=" -Color -Color-Bold">1/1</span> <span class=" -Color -Color-Green">━━━━━━━━━━━━━━━━━━━━</span> <span class=" -Color -Color-Bold">0s</span> 132ms/step
+<span class=" -Color -Color-Bold">1/1</span> <span class=" -Color -Color-Green">━━━━━━━━━━━━━━━━━━━━</span> <span class=" -Color -Color-Bold">0s</span> 126ms/step
+<span class=" -Color -Color-Bold">1/1</span> <span class=" -Color -Color-Green">━━━━━━━━━━━━━━━━━━━━</span> <span class=" -Color -Color-Bold">0s</span> 143ms/step
+<span class=" -Color -Color-Bold">1/1</span> <span class=" -Color -Color-Green">━━━━━━━━━━━━━━━━━━━━</span> <span class=" -Color -Color-Bold">0s</span> 174ms/step
+<span class=" -Color -Color-Bold">1/1</span> <span class=" -Color -Color-Green">━━━━━━━━━━━━━━━━━━━━</span> <span class=" -Color -Color-Bold">0s</span> 130ms/step
+<span class=" -Color -Color-Bold">1/1</span> <span class=" -Color -Color-Green">━━━━━━━━━━━━━━━━━━━━</span> <span class=" -Color -Color-Bold">0s</span> 134ms/step
+<span class=" -Color -Color-Bold">1/1</span> <span class=" -Color -Color-Green">━━━━━━━━━━━━━━━━━━━━</span> <span class=" -Color -Color-Bold">0s</span> 147ms/step
+</pre></div>
+</div>
+</div>
 </div>
 <p>Plotting the images along with the model predictions.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">img_name</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">X_new</span><span class="p">,</span> <span class="n">new_images_names</span><span class="p">)):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;--------------------------</span><span class="se">\n</span><span class="s1">Analyzing </span><span class="si">{</span><span class="n">img_name</span><span class="si">}</span><span class="se">\n</span><span class="s1">--------------------------&#39;</span><span class="p">)</span>
-    <span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">img</span><span class="p">)</span><span class="o">.</span><span class="n">resize</span><span class="p">((</span><span class="mi">500</span><span class="p">,</span> <span class="mi">350</span><span class="p">)))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;--------------------------</span><span class="se">\n</span><span class="s1">Predicting </span><span class="si">{</span><span class="n">img_name</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">Y_new_hat</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;--------------------------</span><span class="se">\n</span><span class="s1">Result: Fire detected</span><span class="se">\n</span><span class="s1">--------------------------&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Result: Fire detected</span><span class="se">\n</span><span class="s1">--------------------------&#39;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;--------------------------</span><span class="se">\n</span><span class="s1">Result: Fire not detected</span><span class="se">\n</span><span class="s1">--------------------------&#39;</span><span class="p">)</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">########################################################################################################</span><span class="se">\n</span><span class="s1">########################################################################################################</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Result: Fire not detected</span><span class="se">\n</span><span class="s1">--------------------------&#39;</span><span class="p">)</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">img</span><span class="p">)</span><span class="o">.</span><span class="n">resize</span><span class="p">((</span><span class="mi">500</span><span class="p">,</span> <span class="mi">350</span><span class="p">)))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--------------------------
-Analyzing img1.png
+Predicting img1.png
+
+Result: Fire detected
 --------------------------
 </pre></div>
 </div>
 <img alt="_images/4005f024f58612ec82f0f61cdcd2354695341a2d2fd792e37121a2e0bd415c5b.png" src="_images/4005f024f58612ec82f0f61cdcd2354695341a2d2fd792e37121a2e0bd415c5b.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--------------------------
+Predicting img2.jpg
+
 Result: Fire detected
---------------------------
-
-########################################################################################################
-########################################################################################################
-
---------------------------
-Analyzing img2.jpg
 --------------------------
 </pre></div>
 </div>
 <img alt="_images/bf5f7c81ab18954e2c1e38af5c21147056613facb4a9633e70ac99a134e26fc4.png" src="_images/bf5f7c81ab18954e2c1e38af5c21147056613facb4a9633e70ac99a134e26fc4.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--------------------------
+Predicting img3.jpg
+
 Result: Fire detected
---------------------------
-
-########################################################################################################
-########################################################################################################
-
---------------------------
-Analyzing img3.jpg
 --------------------------
 </pre></div>
 </div>
 <img alt="_images/bef54590ed52cdcb26b3a2230b8d0a2b0db84b73dd191d4c8cc42eb46f40d621.png" src="_images/bef54590ed52cdcb26b3a2230b8d0a2b0db84b73dd191d4c8cc42eb46f40d621.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--------------------------
-Result: Fire detected
---------------------------
+Predicting img4.jpg
 
-########################################################################################################
-########################################################################################################
-
---------------------------
-Analyzing img4.jpg
+Result: Fire not detected
 --------------------------
 </pre></div>
 </div>
 <img alt="_images/d5f465c52a757c4ee580d8148ac41bdf0766b58fe41d583eb9bf26cefb24d4d2.png" src="_images/d5f465c52a757c4ee580d8148ac41bdf0766b58fe41d583eb9bf26cefb24d4d2.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--------------------------
+Predicting img5.jpg
+
 Result: Fire not detected
---------------------------
-
-########################################################################################################
-########################################################################################################
-
---------------------------
-Analyzing img5.jpg
 --------------------------
 </pre></div>
 </div>
 <img alt="_images/4a85f015524c3315f872ce8567f35ad13039bce63e5150515b8651f070c4f749.png" src="_images/4a85f015524c3315f872ce8567f35ad13039bce63e5150515b8651f070c4f749.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--------------------------
+Predicting img6.jpg
+
 Result: Fire not detected
---------------------------
-
-########################################################################################################
-########################################################################################################
-
---------------------------
-Analyzing img6.jpg
 --------------------------
 </pre></div>
 </div>
 <img alt="_images/6a6483b19d0272eabf84ce181a679a199368834614f99e3fbf0f27bb48e2d33f.png" src="_images/6a6483b19d0272eabf84ce181a679a199368834614f99e3fbf0f27bb48e2d33f.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--------------------------
+Predicting img7.jpg
+
 Result: Fire not detected
---------------------------
-
-########################################################################################################
-########################################################################################################
-
---------------------------
-Analyzing img7.jpg
 --------------------------
 </pre></div>
 </div>
 <img alt="_images/a842fbb139ff3a77eed930d8247a304e1f1e1374f74e2d8dce6cd627902ceed9.png" src="_images/a842fbb139ff3a77eed930d8247a304e1f1e1374f74e2d8dce6cd627902ceed9.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--------------------------
-Result: Fire not detected
---------------------------
+Predicting img8.jpg
 
-########################################################################################################
-########################################################################################################
-
---------------------------
-Analyzing img8.jpg
+Result: Fire detected
 --------------------------
 </pre></div>
 </div>
 <img alt="_images/c5d586c8776e5108d18eca7e64575c0dd4ec926e790d68f28d24ba3f043ee28f.png" src="_images/c5d586c8776e5108d18eca7e64575c0dd4ec926e790d68f28d24ba3f043ee28f.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--------------------------
-Result: Fire detected
---------------------------
-
-########################################################################################################
-########################################################################################################
-</pre></div>
-</div>
 </div>
 </div>
 <p>All the new images have been classified correctly.</p>
