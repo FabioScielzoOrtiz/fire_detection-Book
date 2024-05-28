@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
@@ -391,9 +391,11 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#defining-the-pipelines"><strong>Defining the pipelines</strong></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#applying-inner-evaluation-with-pixels-features"><strong>Applying inner evaluation with pixels features</strong></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grids-for-hpo"><strong>Grids for HPO</strong></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hyper-parameter-optimization-hpo"><strong>Hyper-parameter Optimization (HPO)</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#applying-inner-evaluation-with-pixels-features"><strong>Applying inner evaluation with pixels features</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#grids-for-hpo"><strong>Grids for HPO</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hyper-parameter-optimization-hpo"><strong>Hyper-parameter Optimization (HPO)</strong></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#applying-inner-evaluation-with-hog-features"><strong>Applying inner evaluation with HOG features</strong></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><strong>Grids for HPO</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2"><strong>Hyper-parameter Optimization (HPO)</strong></a></li>
@@ -658,9 +660,8 @@ document.write(`
 <h2><strong>Applying inner evaluation with pixels features</strong><a class="headerlink" href="#applying-inner-evaluation-with-pixels-features" title="Link to this heading">#</a></h2>
 <p>In this section inner evaluation will be applied considering only the pixels method for features extraction.</p>
 <p>We could do a more general inner evaluation considering the feature extraction method as a hyper-parameter to be optimize, but instead we prefer to apply a more exhaustive hyper-parameter search over each specific features extraction method between the three addressed in this project, since we consider it as a more proper way for achieving a better model, as well as for understanding how different parameters and alternatives work with each feature extraction method, so that we will be able to asses more precisely how those parameters affect to de features extraction method.</p>
-</section>
 <section id="grids-for-hpo">
-<h2><strong>Grids for HPO</strong><a class="headerlink" href="#grids-for-hpo" title="Link to this heading">#</a></h2>
+<h3><strong>Grids for HPO</strong><a class="headerlink" href="#grids-for-hpo" title="Link to this heading">#</a></h3>
 <p>A possible general pipeline for the preprocessing part.</p>
 <p>If we would have followed a more general HPO where the features extraction method were another alternative to explore, instead of being fixed, this grid could have been used.</p>
 <div class="cell docutils container">
@@ -979,7 +980,7 @@ document.write(`
 </div>
 </section>
 <section id="hyper-parameter-optimization-hpo">
-<h2><strong>Hyper-parameter Optimization (HPO)</strong><a class="headerlink" href="#hyper-parameter-optimization-hpo" title="Link to this heading">#</a></h2>
+<h3><strong>Hyper-parameter Optimization (HPO)</strong><a class="headerlink" href="#hyper-parameter-optimization-hpo" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inner_score</span><span class="p">,</span> <span class="n">best_params</span><span class="p">,</span> <span class="n">inner_results</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">{},</span> <span class="p">{}</span>
@@ -1251,6 +1252,7 @@ document.write(`
 </div>
 </div>
 </div>
+</section>
 </section>
 <section id="applying-inner-evaluation-with-hog-features">
 <h2><strong>Applying inner evaluation with HOG features</strong><a class="headerlink" href="#applying-inner-evaluation-with-hog-features" title="Link to this heading">#</a></h2>
@@ -2748,9 +2750,11 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#defining-the-pipelines"><strong>Defining the pipelines</strong></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#applying-inner-evaluation-with-pixels-features"><strong>Applying inner evaluation with pixels features</strong></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grids-for-hpo"><strong>Grids for HPO</strong></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hyper-parameter-optimization-hpo"><strong>Hyper-parameter Optimization (HPO)</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#applying-inner-evaluation-with-pixels-features"><strong>Applying inner evaluation with pixels features</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#grids-for-hpo"><strong>Grids for HPO</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hyper-parameter-optimization-hpo"><strong>Hyper-parameter Optimization (HPO)</strong></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#applying-inner-evaluation-with-hog-features"><strong>Applying inner evaluation with HOG features</strong></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><strong>Grids for HPO</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2"><strong>Hyper-parameter Optimization (HPO)</strong></a></li>
